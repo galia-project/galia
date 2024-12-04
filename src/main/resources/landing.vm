@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    #parse("head_common.vm")
+
+    <title>Galia Image Server</title>
+
+    <style type="text/css">
+        #cl-landing {
+            background-image: url('static/images/galia_logo.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 40%;
+        }
+    </style>
+</head>
+
+<body id="cl-landing" style="width: 100%; height: 100%">
+</body>
+
+</html>

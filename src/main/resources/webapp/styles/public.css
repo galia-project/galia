@@ -1,0 +1,87 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: rgb(33, 37, 41);
+        color: white;
+    }
+}
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: white;
+        color: black;
+    }
+}
+
+/* landing page */
+
+body#cl-landing {
+
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* error page */
+
+body#cl-error > #cl-error-info {
+    margin: 0 auto;
+    margin-top: 15%;
+    margin-bottom: 15%;
+    width: 75%;
+}
+
+body#cl-error > #cl-error-info > #cl-status-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+body#cl-error > #cl-error-info > #cl-status-line > #cl-status-code {
+    font-size: 7em;
+    font-weight: 200;
+    margin-right: 0.2em;
+}
+
+body#cl-error > #cl-error-info > #cl-status-line > #cl-status-reason {
+    font-size: 3em;
+    font-weight: 300;
+}
+
+body#cl-error > #cl-error-info > #cl-message {
+    font-size: 1.4em;
+    font-weight: 300;
+    text-align: center;
+}
+
+body#cl-error > #cl-stack-trace {
+    padding: 1em;
+    overflow-x: scroll;
+}
+
+@media (prefers-color-scheme: dark) {
+    body#cl-error > #cl-stack-trace {
+        background-color: #303030;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body#cl-error > #cl-stack-trace {
+        background-color: rgba(33, 37, 41, 0.075);
+    }
+}
+
+body#cl-error > #cl-stack-trace pre {
+    font-family: 'Consolas', 'Monaco', monospace;
+    margin: 0;
+}

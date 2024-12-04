@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file effectively silences Logback during testing, and prevents it from
+using its own fallback configuration before our custom configuration for it is
+ready. See is.galia.logging.CustomConfigurator for more information.
+-->
+<configuration>
+</configuration>

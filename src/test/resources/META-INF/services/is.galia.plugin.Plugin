@@ -1,0 +1,9 @@
+is.galia.cache.MockCachePlugin
+is.galia.codec.MockDecoderPlugin
+is.galia.codec.MockDecoderPlugin2
+is.galia.codec.MockEncoderPlugin
+is.galia.codec.MockEncoderPlugin2
+is.galia.plugin.MockPlugin
+is.galia.resource.MockResourcePlugin
+is.galia.source.MockSourcePlugin
+is.galia.test.TestDelegate

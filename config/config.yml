@@ -1,0 +1,557 @@
+#############################################################################
+# Sample Galia configuration file
+#
+# Keys may change from version to version. See UPGRADING.md, and also try
+# the bin/configtest script.
+#
+# Some changes will take effect without restarting. Those that won't are
+# marked with "!!".
+#############################################################################
+
+# Pasting your customer key here, if you have one, will enable easier plugin
+# management. (THIS KEY IS PRIVATE--DO NOT SHARE.)
+customer_key:
+
+# !! Leave blank to use the JVM default temporary directory.
+temp_pathname:
+
+# !! Configures the HTTP server. (Standalone mode only.)
+server.http.enabled: true
+server.http.host: 0.0.0.0
+server.http.port: 8182
+
+# !! Configures the HTTPS server. (Standalone mode only.)
+server.https.enabled: false
+server.https.host: 0.0.0.0
+server.https.port: 8183
+
+# !! Available values are `JKS` and `PKCS12`. (Standalone mode only.)
+server.https.key_store_type: JKS
+server.https.key_store_password: myPassword
+server.https.key_store_path: /path/to/keystore.jks
+server.https.key_password: myPassword
+
+# !! Various parameters of the built-in web server's thread pool. Leave
+# blank to use the defaults.
+server.http.min_threads:
+server.http.max_threads:
+server.http.accept_queue_limit:
+server.http.idle_timeout: 30
+
+# Base URI to use for internal links, such as Link headers and JSON-LD
+# @id values, in a reverse-proxy context. This should only be used when
+# X-Forwarded-* headers cannot be used instead. (See the Guide.)
+base_uri:
+
+# Normally, slashes in a URI path component must be percent-encoded as
+# "%2F". If your proxy is not able to pass these through without decoding,
+# you can define an alternate character or character sequence to substitute
+# for a slash. Supply the non-percent-encoded version here, and use the
+# percent-encoded version in URLs.
+slash_substitute:
+
+# Maximum number of pixels to return in a response, to prevent overloading
+# the server. Requests for more pixels than this will receive an error
+# response. Set to 0 for no maximum.
+max_pixels: 10000000
+
+# Maximum scale to allow (1.0 = full scale; 0 = no maximum).
+max_scale: 1.0
+
+# A meta-identifier is a superset of an identifier that includes other
+# information like a page number and/or scale constraint. A meta-identifier
+# transformer transforms a meta-identifier to and from a string in a URI
+# path component.
+# Available transformers include `StandardMetaIdentifierTransformer` and
+# `DelegateMetaIdentifierTransformer`. See the Guide for more information
+# about meta-identifiers and these options.
+meta_identifier.transformer: StandardMetaIdentifierTransformer
+
+# Character sequence that separates the components of a meta-identifier in
+# the identifier portion of a URI.
+meta_identifier.transformer.StandardMetaIdentifierTransformer.delimiter: ;
+
+# If true, HTTP >= 400-level responses are logged at WARN and ERROR level.
+# This may result in multiple log statements for the same error, but it may
+# also help diagnose errors that have evaded logging.
+log_error_responses: false
+
+# If true, error pages will include stack trace information.
+print_stack_trace_on_error_pages: true
+
+# If true, reports of server-side errors will automatically be sent to
+# Baird Creek Software LLC, which may help to improve product quality
+# and/or assist with diagnosing problems.
+# Leave this disabled unless you are aware of what information is included
+# in the reports (refer to the Guide), and are willing to consent to its
+# disclosure.
+report_errors: false
+
+###########################################################################
+# ENDPOINTS
+###########################################################################
+
+# Enables the Deep Zoom endpoint.
+endpoint.deepzoom.enabled: true
+endpoint.deepzoom.path: /dzi
+
+# It is recommended that this be a power of 2.
+endpoint.deepzoom.min_tile_size: 512
+
+# This format key must be defined in the encoder.formats config key.
+# Officially, Deep Zoom only supports JPEG and PNG, but some clients may
+# work with others.
+endpoint.deepzoom.format: jpg
+
+# Enables the IIIF Image API 1.x endpoint.
+endpoint.iiif.1.enabled: false
+endpoint.iiif.1.path: /iiif/1
+
+# Enables the IIIF Image API 2.x endpoint.
+endpoint.iiif.2.enabled: true
+endpoint.iiif.2.path: /iiif/2
+
+# Enables the IIIF Image API 3.x endpoint.
+endpoint.iiif.3.enabled: true
+endpoint.iiif.3.path: /iiif/3
+
+# Minimum size that will be used in info.json `sizes` keys.
+endpoint.iiif.min_size: 64
+
+# Minimum size that will be used in info.json `tiles` keys. It is recommended
+# that this be a power of 2.
+endpoint.iiif.min_tile_size: 512
+
+# If true, requests for sizes other than those contained in an information
+# response will be denied.
+endpoint.iiif.restrict_to_sizes: false
+
+# Enables the administrative HTTP API. (See the Guide.)
+endpoint.api.enabled: false
+
+# HTTP Basic credentials to access the HTTP API.
+endpoint.api.username:
+endpoint.api.secret:
+
+# Enables the health check endpoint, at /health.
+endpoint.health.enabled: true
+
+# If true, sources and caches will be checked, resulting in a more robust
+# but slower health check. Set this to false if these services already have
+# their own health checks.
+endpoint.health.dependency_check: false
+
+###########################################################################
+# SOURCES
+###########################################################################
+
+# Uses one source for all requests. `FilesystemSource` and `HTTPSource` are
+# the two bundled implementations; others are available as plugins.
+source.static: FilesystemSource
+
+# If true, `source.static` will be ignored, and the `source()` delegate
+# method will be used to select a source per-request.
+source.delegate: false
+
+# The chunk cache caches downloaded chunks (from stream-based sources other
+# than FilesystemSource) in the Java heap. This is particularly useful when
+# lots of requests are needed for the same ranges of the same image data.
+source.chunk_cache.enabled: true
+
+# !! Maximum size of the chunk cache.
+source.chunk_cache.max_size: 100M
+
+#----------------------------------------
+# FilesystemSource
+#----------------------------------------
+
+# How to look up files. Allowed values are `BasicLookupStrategy` and
+# `DelegateLookupStrategy`. DelegateLookupStrategy uses the delegate script
+# for dynamic lookups; see the Guide.
+source.FilesystemSource.lookup_strategy: BasicLookupStrategy
+
+# Server-side path that will be prefixed to the identifier in the URL.
+# Trailing slash is important!
+source.FilesystemSource.BasicLookupStrategy.path_prefix: /home/myself/images/
+
+# Server-side path or extension that will be suffixed to the identifier in
+# the URL.
+source.FilesystemSource.BasicLookupStrategy.path_suffix:
+
+#----------------------------------------
+# HTTPSource
+#----------------------------------------
+
+# Trusts insecure certificates and cipher suites.
+source.HTTPSource.allow_insecure: false
+
+# Request timeout in seconds.
+source.HTTPSource.request_timeout:
+
+# !! Client HTTP proxy.
+source.HTTPSource.proxy.http.host:
+source.HTTPSource.proxy.http.port:
+
+# Tells HTTPSource how to look up resources. Allowed values are
+# `BasicLookupStrategy` and `DelegateLookupStrategy`. DelegateLookupStrategy
+# uses a delegate method for dynamic lookups; see the Guide.
+source.HTTPSource.lookup_strategy: BasicLookupStrategy
+
+# URL that will be prefixed to the identifier in the request URL.
+# Trailing slash is important!
+source.HTTPSource.BasicLookupStrategy.url_prefix: http://localhost/images/
+
+# Path, extension, query string, etc. that will be suffixed to the
+# identifier in the request URL.
+source.HTTPSource.BasicLookupStrategy.url_suffix:
+
+# Enables access to resources that require HTTP Basic authentication.
+source.HTTPSource.BasicLookupStrategy.auth.basic.username:
+source.HTTPSource.BasicLookupStrategy.auth.basic.secret:
+
+# Before an image is retrieved, a preliminary request is sent to check
+# various characteristics. Typically this is a HEAD request, but for
+# resources that don't support those, this key enables a ranged GET
+# request to be sent instead.
+source.HTTPSource.BasicLookupStrategy.send_head_requests: true
+
+# Read data in chunks when it may be more efficient. (This may also end up
+# being less efficient, depending on many variables; see the Guide.)
+source.HTTPSource.chunking.enabled: true
+
+# Chunk size.
+source.HTTPSource.chunking.chunk_size: 512K
+
+###########################################################################
+# IMAGE PROCESSING
+###########################################################################
+
+# The processor will try to use embedded thumbnails to satisfy requests
+# for small enough images, if supported by the decoder. This is generally
+# a lot faster than reading the main image, but the quality may vary.
+processor.use_embedded_thumbnails: true
+
+# Color of the background when an image is rotated or alpha-flattened, for
+# output formats that don't support transparency.
+# This may not be respected for indexed color variant images.
+processor.background_color: white
+
+# Available values in approximate quality order are `mks2013`, `lanczos3`,
+# `box`, `bicubic`, `mitchell`, `triangle`, `bell`, `hermite` `bspline`
+processor.downscale_filter: box
+processor.upscale_filter: bicubic
+
+# If true, images are downscaled in a linear color space, which is more
+# accurate. This only works with mono-resolution (non-pyramidal) images. It
+# also may impair performance.
+processor.downscale_linear: false
+
+# Intensity of an unsharp mask from 0 to 1.
+processor.sharpen: 0
+
+###########################################################################
+# IMAGE DECODERS
+###########################################################################
+
+# This is a map of format keys to decoder implementation names. Normally,
+# the decoder that is chosen to read an image is the first one that is
+# found that declares support for it based on its extension or byte
+# signature. When there are multiple decoders that support the same format,
+# this provides a way to select one over the other(s).
+#
+# For a list of all available formats, use the bin/list_formats script.
+decoder.formats:
+#  jpg: MyCustomDecoder
+
+###########################################################################
+# IMAGE ENCODERS
+###########################################################################
+
+# This is a map of format keys to encoder implementation names. Normally,
+# the encoder that is chosen to write an image is the first one that is
+# found that declares support for its format. When there are multiple
+# encoders that support the same format, this provides a way to select one
+# over the other(s).
+#
+# For a list of all available formats, use the bin/list_formats script.
+#
+# Note that this key works differently than `decoder.formats` in that only
+# the listed formats will be available for output.
+# GIF is disabled by default because of its limited utility, and TIFF is
+# disabled because it is inherently inefficient to deliver.
+encoder.formats:
+  #gif: GIFEncoder
+  jpg: JPEGEncoder
+  png: PNGEncoder
+  #tif: TIFFEncoder
+
+# Progressive JPEGs are usually more compact.
+encoder.JPEGEncoder.progressive: true
+
+# Quality factor (1-100).
+encoder.JPEGEncoder.quality: 70
+
+# TIFF output compression type. Available values are `Deflate`, `LZW`,
+# `PackBits`, and `ZLib`. Leave blank for no compression.
+encoder.TIFFEncoder.compression: LZW
+
+###########################################################################
+# CLIENT-SIDE CACHING
+###########################################################################
+
+# Whether to enable the response Cache-Control header.
+cache.client.enabled: true
+
+cache.client.max_age: 2592000
+cache.client.shared_max_age:
+cache.client.public: true
+cache.client.private: false
+cache.client.no_cache: false
+cache.client.no_store: false
+cache.client.must_revalidate: false
+cache.client.proxy_revalidate: false
+cache.client.no_transform: true
+
+###########################################################################
+# SERVER-SIDE CACHING
+###########################################################################
+
+# If true, when a source reports that the requested source image has gone
+# missing, all cached information relating to it (if any) will be deleted.
+# (This is effectively always false when `cache.server.resolve_first` is
+# also false.)
+cache.server.evict_missing: false
+
+# If true, the source image will be confirmed to exist before a cached copy
+# is returned. If false, the cached copy will be returned without checking.
+# Resolving first is safer but slower.
+cache.server.resolve_first: false
+
+# !! Enables the cache worker, which periodically purges invalid cache
+# items in the background.
+cache.server.worker.enabled: false
+
+# !! The cache worker will wait this many seconds before starting its
+# next shift.
+cache.server.worker.interval: 86400
+
+#----------------------------------------
+# Variant Cache
+#----------------------------------------
+
+# Enables the variant (processed image) cache.
+cache.server.variant.enabled: false
+
+# Available values are `FilesystemCache` and `HeapCache`. Others are
+# available as plugins.
+cache.server.variant.implementation:
+
+# Amount of time variant cache content remains valid. Set to blank or 0
+# for forever.
+cache.server.variant.ttl_seconds: 2592000
+
+#----------------------------------------
+# Info Cache
+#----------------------------------------
+
+# Enables the info cache.
+cache.server.info.enabled: false
+
+# Available values are `FilesystemCache` and `HeapCache`. Others are
+# available as plugins.
+cache.server.info.implementation:
+
+# Amount of time info cache content remains valid. Set to blank or 0 for
+# forever.
+cache.server.info.ttl_seconds: 2592000
+
+#----------------------------------------
+# Heap Info Cache
+#----------------------------------------
+
+# Whether to use the Java heap as a "level 1" cache for image infos, either
+# independently or in front of the "level 2" info cache above.
+cache.server.heap_info.enabled: true
+
+#----------------------------------------
+# FilesystemCache
+#----------------------------------------
+
+# If this directory does not exist, it will be created automatically.
+cache.FilesystemCache.pathname: /var/cache/galia
+
+# Levels of folder hierarchy in which to store cached images. Deeper depth
+# results in fewer files per directory. Set to 0 to disable subdirectories.
+# Purge the cache after changing this.
+cache.FilesystemCache.dir.depth: 3
+
+# Number of characters in tree directory names. Should be set to
+# 16^n < (max number of directory entries your filesystem can deal with).
+# Purge the cache after changing this.
+cache.FilesystemCache.dir.name_length: 2
+
+#----------------------------------------
+# HeapCache
+#----------------------------------------
+
+# Target cache size, in bytes or a number ending in M, MB, G, GB, etc.
+# This is not a hard limit, and may be transiently exceeded.
+# Ensure your heap can accommodate this size with enough room left for the
+# rest of the application.
+cache.HeapCache.target_size: 2G
+
+###########################################################################
+# OVERLAYS
+###########################################################################
+
+# Controls how overlays are configured. `BasicStrategy` will use the
+# `overlays.BasicStrategy.*` keys in this section. `DelegateStrategy` will
+# use a delegate method. (See the Guide.)
+overlays.strategy: BasicStrategy
+
+# Whether to enable overlays using the BasicStrategy.
+overlays.BasicStrategy.enabled: false
+
+# `image` or `string`.
+overlays.BasicStrategy.type: image
+
+# Absolute path or URL of the overlay image. Must be a PNG file.
+overlays.BasicStrategy.image: /path/to/overlay.png
+
+# Overlay text.
+overlays.BasicStrategy.string: Copyright © My Great Organization\nAll rights reserved.
+
+# For a list of possible values, use the bin/list_fonts script.
+overlays.BasicStrategy.string.font: Helvetica
+
+# Font size in points.
+overlays.BasicStrategy.string.font.size: 24
+
+# If the string doesn't fit in the image at the above size, the largest size
+# at which it does fit will be used, down to this.
+overlays.BasicStrategy.string.font.min_size: 18
+
+# Font weight. 1 = regular, 2 = bold. Unfortunately, many fonts don't
+# support fractional weights.
+overlays.BasicStrategy.string.font.weight: 1.0
+
+# Point spacing between glyphs, typically between -0.1 and 0.1.
+overlays.BasicStrategy.string.glyph_spacing: 0.02
+
+# CSS color syntax is supported.
+overlays.BasicStrategy.string.color: white
+
+# CSS color syntax is supported.
+overlays.BasicStrategy.string.stroke.color: black
+
+# Stroke width in pixels.
+overlays.BasicStrategy.string.stroke.width: 1
+
+# Color of a rectangular background to draw under the string.
+# CSS color syntax and alpha are supported.
+overlays.BasicStrategy.string.background.color: rgba(0, 0, 0, 100)
+
+# Allowed values: `top left`, `top center`, `top right`, `left center`,
+# `center`, `right center`, `bottom left`, `bottom center`, `bottom right`,
+# `repeat` (images only), `scaled` (images only).
+overlays.BasicStrategy.position: bottom right
+
+# Pixel margin between the overlay and the image edge. Does not apply to
+# `repeat` position.
+overlays.BasicStrategy.inset: 10
+
+# Output images less than this many pixels wide will not receive an overlay.
+# Set to 0 to add the overlay regardless.
+overlays.BasicStrategy.output_width_threshold: 400
+
+# Output images less than this many pixels tall will not receive an overlay.
+# Set to 0 to add the overlay regardless.
+overlays.BasicStrategy.output_height_threshold: 300
+
+###########################################################################
+# LOGGING
+###########################################################################
+
+# Supported logging formats are `standard` and `logstash`.
+
+#----------------------------------------
+# !! Application Log
+#----------------------------------------
+
+# `trace`, `debug`, `info`, `warn`, `error`, `all`, or `off`
+log.application.level: debug
+
+log.application.ConsoleAppender.enabled: true
+log.application.ConsoleAppender.format: standard
+log.application.ConsoleAppender.color: true
+
+# N.B.: Don't enable FileAppender and RollingFileAppender simultaneously!
+log.application.FileAppender.enabled: false
+log.application.FileAppender.format: standard
+log.application.FileAppender.pathname: log/application.log
+
+log.application.RollingFileAppender.enabled: false
+log.application.RollingFileAppender.format: standard
+log.application.RollingFileAppender.pathname: log/application.log
+log.application.RollingFileAppender.policy: TimeBasedRollingPolicy
+log.application.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern: log/application-%d{yyyy-MM-dd}.log
+log.application.RollingFileAppender.TimeBasedRollingPolicy.max_history: 30
+
+log.application.LogstashAppender.enabled: false
+# Supported values are `UDP` and `TCP`.
+log.application.LogstashAppender.protocol: TCP
+# SSL uses the default JRE key store. Only applies to the TCP protocol.
+log.application.LogstashAppender.ssl: false
+log.application.LogstashAppender.host:
+log.application.LogstashAppender.port:
+
+# See the "SyslogAppender" section for a list of facilities:
+# http://logback.qos.ch/manual/appenders.html
+log.application.SyslogAppender.enabled: false
+log.application.SyslogAppender.host:
+log.application.SyslogAppender.port: 514
+log.application.SyslogAppender.facility: LOCAL0
+
+#----------------------------------------
+# !! Error Log
+#----------------------------------------
+
+# The error log is a subset of the application log that includes only messages
+# with a severity of WARN or greater.
+
+# N.B.: Don't enable FileAppender and RollingFileAppender simultaneously!
+log.error.FileAppender.enabled: false
+log.error.FileAppender.format: standard
+log.error.FileAppender.pathname: log/error.log
+
+log.error.RollingFileAppender.enabled: false
+log.error.RollingFileAppender.format: standard
+log.error.RollingFileAppender.pathname: log/error.log
+log.error.RollingFileAppender.policy: TimeBasedRollingPolicy
+log.error.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern: log/error-%d{yyyy-MM-dd}.log
+log.error.RollingFileAppender.TimeBasedRollingPolicy.max_history: 30
+
+#----------------------------------------
+# !! Access Log
+#----------------------------------------
+
+log.access.ConsoleAppender.enabled: false
+
+# N.B.: Don't enable FileAppender and RollingFileAppender simultaneously!
+log.access.FileAppender.enabled: false
+log.access.FileAppender.pathname: log/access.log
+
+# RollingFileAppender is an alternative to using something like
+# FileAppender + logrotate.
+log.access.RollingFileAppender.enabled: false
+log.access.RollingFileAppender.pathname: log/access.log
+log.access.RollingFileAppender.policy: TimeBasedRollingPolicy
+log.access.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern: log/access-%d{yyyy-MM-dd}.log
+log.access.RollingFileAppender.TimeBasedRollingPolicy.max_history: 30
+
+# See the "SyslogAppender" section for a list of facilities:
+# http://logback.qos.ch/manual/appenders.html
+log.access.SyslogAppender.enabled: false
+log.access.SyslogAppender.host:
+log.access.SyslogAppender.port: 514
+log.access.SyslogAppender.facility: LOCAL0

@@ -1,0 +1,10 @@
+# This is a test document
+#with another comment
+
+plain_value: hello world!
+trailing_comment: value # comment #
+quoted_value: "value: value # not a comment"
+aligned_value    :    value
+"quoted_key": value
+"quoted aligned key"   :   value
+inner_quotes: this " " is " valid

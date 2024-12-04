@@ -1,0 +1,29 @@
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Eclipse stuff
+.classpath
+.project
+.settings/*
+
+# IntelliJ stuff
+/.idea
+/*.iml
+/*.ipr
+/*.iws
+
+# NetBeans stuff
+nbactions.xml
+
+# App config
+/config/config-*.yml
+/config/delegates*.rb
+/config/jvm-*.options
+
+# Plugins
+/plugins/*
+!/plugins/.keep
+
+# Auto-generated content
+/target

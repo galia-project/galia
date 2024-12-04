@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        #parse("head_common.vm")
+
+        <title>$pageTitle</title>
+    </head>
+
+    <body id="cl-error">
+        <section id="cl-error-info">
+            <section id="cl-status-line">
+                <span id="cl-status-code">$statusCode</span>
+                <span id="cl-status-reason">$statusReason</span>
+            </section>
+            #if ($message)
+                <p id="cl-message">$message</p>
+            #end
+        </section>
+
+        #if ($stackTrace)
+            <section id="cl-stack-trace">
+                <pre>$stackTrace</pre>
+            </section>
+        #end
+
+    </body>
+</html>

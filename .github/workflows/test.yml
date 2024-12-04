@@ -1,0 +1,21 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        jdk: [jdk22]
+      fail-fast: false
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+      - name: Build on Linux x86-64 JDK22
+        if: matrix.os == 'ubuntu-latest' && matrix.jdk == 'jdk22'
+        run: docker build -t galia:test -f docker/test/Linux_x86-64_JDK22/Dockerfile .
+      - name: Build on Windows x86-64 JDK 22
+        if: matrix.os == 'windows-latest' && matrix.jdk == 'jdk22'
+        run: docker build -t galia:test -f docker\test\Windows_x86-64_JDK22\Dockerfile .
+      - name: Run
+        run: docker run galia:test

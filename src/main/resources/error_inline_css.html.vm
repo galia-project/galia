@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!-- This template is self-contained with no links to external CSS/JS. -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>$pageTitle</title>
+        <style type="text/css">
+        $css
+        </style>
+    </head>
+
+    <body id="cl-error">
+        <section id="cl-error-info">
+            <section id="cl-status-line">
+                <span id="cl-status-code">$statusCode</span>
+                <span id="cl-status-reason">$statusReason</span>
+            </section>
+            #if ($message)
+                <p id="cl-message">$message</p>
+            #end
+        </section>
+
+        #if ($stackTrace)
+            <section id="cl-stack-trace">
+                <pre>$stackTrace</pre>
+            </section>
+        #end
+
+    </body>
+</html>
