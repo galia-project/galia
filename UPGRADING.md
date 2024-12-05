@@ -12,8 +12,7 @@ is also recommended reading.
 * Galia's YAML-format configuration file is incompatible with Cantaloupe's
   properties-format configuration file. Because of that, and because there
   are so many new, changed, and removed keys, it is recommended to start over
-  with a new configuration file based on the bundled configuration file
-  (`config/config.yml`).
+  with a new configuration file.
 * Some of the functionality provided by various Cantaloupe components (like
   PdfBoxProcessor, S3Source, etc.) has been moved into plugins. This includes
   JRuby, which enables the Ruby delegate. See the Plugins sections of the
