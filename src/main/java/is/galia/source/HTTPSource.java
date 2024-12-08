@@ -673,15 +673,12 @@ class HTTPSource extends AbstractSource implements Source {
             LOGGER.error("newInputStream(): {}", e.getMessage());
             throw new IOException(e);
         }
-        if (info != null) {
-            LOGGER.debug("Resolved {} to {}", identifier, info.getURI());
-            getResourceInfo();
-            return new HTTPStreamFactory(
-                    info,
-                    resourceInfo.contentLength(),
-                    resourceInfo.acceptsRanges()).newSeekableStream();
-        }
-        return null;
+        LOGGER.debug("Resolved {} to {}", identifier, info.getURI());
+        getResourceInfo();
+        return new HTTPStreamFactory(
+                info,
+                resourceInfo.contentLength(),
+                resourceInfo.acceptsRanges()).newSeekableStream();
     }
 
     @Override
