@@ -178,7 +178,7 @@ public final class JPEGMetadataReader {
                 long initialPos = inputStream.getStreamPosition();
                 inputStream.seek(thumbDirOffset);
                 thumbData = new byte[thumbLength];
-                inputStream.read(thumbData);
+                inputStream.readFully(thumbData);
                 inputStream.seek(initialPos);
             }
         }
