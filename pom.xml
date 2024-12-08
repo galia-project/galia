@@ -227,14 +227,11 @@
                 </executions>
             </plugin>
 
-            <!-- Find bugs with mvn spotbugs:spotbugs spotbugs:gui -->
+            <!-- Find bugs with mvn clean compile spotbugs:spotbugs spotbugs:gui -->
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.8.2.0</version>
-                <configuration>
-                    <excludeFilterFile>spotbugsfilter.xml</excludeFilterFile>
-                </configuration>
+                <version>4.8.6.0</version>
             </plugin>
 
             <plugin>
