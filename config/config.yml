@@ -79,14 +79,6 @@ log_error_responses: false
 # If true, error pages will include stack trace information.
 print_stack_trace_on_error_pages: true
 
-# If true, reports of server-side errors will automatically be sent to
-# Baird Creek Software LLC, which may help to improve product quality
-# and/or assist with diagnosing problems.
-# Leave this disabled unless you are aware of what information is included
-# in the reports (refer to the Guide), and are willing to consent to its
-# disclosure.
-report_errors: false
-
 ###########################################################################
 # ENDPOINTS
 ###########################################################################

@@ -191,7 +191,8 @@ public record Key(String key, boolean isPublic) {
     public static Key PROCESSOR_SHARPEN                                    = new Key("processor.sharpen", true);
     public static Key PROCESSOR_UPSCALE_FILTER                             = new Key("processor.upscale_filter", true);
     public static Key PROCESSOR_USE_EMBEDDED_THUMBNAILS                    = new Key("processor.use_embedded_thumbnails", true);
-    public static Key REPORT_ERRORS                                        = new Key("report_errors", true);
+    /** Not present in the sample config file. */
+    public static Key REPORT_ERRORS                                        = new Key("report_errors", false);
     public static Key SOURCE_DELEGATE                                      = new Key("source.delegate", true);
     public static Key SOURCE_STATIC                                        = new Key("source.static", true);
     public static Key SLASH_SUBSTITUTE                                     = new Key("slash_substitute", true);
