@@ -255,13 +255,8 @@ public final class HealthChecker {
         }
 
         // Log the final status.
-        if (Health.Color.GREEN.equals(health.getColor())) {
-            LOGGER.trace("Sequential health check completed in {}: {}",
-                    watch, health);
-        } else {
-            LOGGER.trace("Sequential health check completed in {}: {}",
-                    watch, health);
-        }
+        LOGGER.trace("Sequential health check completed in {}: {}",
+                watch, health);
         return health;
     }
 
@@ -326,13 +321,8 @@ public final class HealthChecker {
         }
 
         // Log the final status.
-        if (Health.Color.GREEN.equals(health.getColor())) {
-            LOGGER.trace("Concurrent health check completed in {}: {}",
-                    watch, health);
-        } else {
-            LOGGER.trace("Concurrent health check completed in {}: {}",
-                    watch, health);
-        }
+        LOGGER.trace("Concurrent health check completed in {}: {}",
+                watch, health);
         return health;
     }
 
