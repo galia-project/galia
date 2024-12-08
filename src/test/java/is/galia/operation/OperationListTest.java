@@ -690,6 +690,14 @@ class OperationListTest extends BaseTest {
         assertEquals(new Identifier("cats"), instance.getIdentifier());
     }
 
+    /* getOperations() */
+
+    @Test
+    void getOperationsReturnedInstanceIsUnmodifiable() {
+        assertThrows(UnsupportedOperationException.class,
+                () -> instance.getOperations().add(new ScaleByPercent()));
+    }
+
     /* getOptions() */
 
     @Test

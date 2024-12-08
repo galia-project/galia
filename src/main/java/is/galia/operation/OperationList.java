@@ -455,8 +455,11 @@ public final class OperationList implements Iterable<Operation> {
         return metaIdentifier;
     }
 
+    /**
+     * @return Unmodifiable instance.
+     */
     public List<Operation> getOperations() {
-        return operations;
+        return Collections.unmodifiableList(operations);
     }
 
     /**
