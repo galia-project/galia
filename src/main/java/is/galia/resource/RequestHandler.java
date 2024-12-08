@@ -34,6 +34,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -170,7 +171,7 @@ public class RequestHandler extends DefaultHandler {
                              Callback callback) {
         jettyResponse.setStatus(status);
         try (ByteArrayOutputStream os = new ByteArrayOutputStream();
-             PrintWriter writer = new PrintWriter(os)) {
+             PrintWriter writer = new PrintWriter(os, false, StandardCharsets.UTF_8)) {
             writer.print("Unrecoverable error in " +
                     RequestHandler.class.getSimpleName());
             if (isPrintingStackTraces()) {
