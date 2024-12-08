@@ -425,10 +425,8 @@ public abstract class AbstractResource {
      *         RFC 2616</a>
      */
     protected final List<String> getPreferredMediaTypes() {
-        class Preference implements Comparable<Preference> {
-            private String mediaType;
-            private float qValue;
-
+        record Preference(String mediaType,
+                          float qValue) implements Comparable<Preference> {
             @Override
             public int compareTo(Preference other) {
                 return Float.compare(other.qValue, qValue);
@@ -440,22 +438,20 @@ public abstract class AbstractResource {
         if (acceptHeader != null) {
             String[] clauses = acceptHeader.split(",");
             for (String clause : clauses) {
-                String[] parts        = clause.split(";");
-                Preference preference = new Preference();
-                preference.mediaType  = parts[0].trim();
-                if ("*/*".equals(preference.mediaType)) {
+                final String[] parts   = clause.split(";");
+                final String mediaType = parts[0].trim();
+                if ("*/*".equals(mediaType)) {
                     continue;
                 }
+                float qValue = 1;
                 if (parts.length > 1) {
                     String q = parts[1].trim();
                     if (q.startsWith("q=")) {
-                        q = q.substring(2);
-                        preference.qValue = Float.parseFloat(q);
+                        q      = q.substring(2);
+                        qValue = Float.parseFloat(q);
                     }
-                } else {
-                    preference.qValue = 1;
                 }
-                preferences.add(preference);
+                preferences.add(new Preference(mediaType, qValue));
             }
         }
         return preferences.stream()
