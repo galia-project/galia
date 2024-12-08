@@ -19,6 +19,7 @@ package is.galia.config;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -221,8 +222,11 @@ public final class ConfigurationProvider implements Configuration {
         return defaultValue;
     }
 
+    /**
+     * @return Unmodifiable instance.
+     */
     public List<Configuration> getWrappedConfigurations() {
-        return wrappedConfigs;
+        return Collections.unmodifiableList(wrappedConfigs);
     }
 
     @Override

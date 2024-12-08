@@ -292,6 +292,8 @@ class ConfigurationProviderTest extends BaseTest {
         assertEquals(2, instance.getLong("key", 2), DELTA);
     }
 
+    /* getProperty() */
+
     @Test
     void getProperty() {
         // set in config1
@@ -308,6 +310,8 @@ class ConfigurationProviderTest extends BaseTest {
         config2.clear();
         assertNull(instance.getProperty("key"));
     }
+
+    /* getString() */
 
     @Test
     void getString1() {
@@ -343,20 +347,34 @@ class ConfigurationProviderTest extends BaseTest {
         assertEquals("default", instance.getString("key", "default"));
     }
 
+    /* getWrappedConfigurations() */
+
     @Test
     void getWrappedConfigurations() {
         assertEquals(2, instance.getWrappedConfigurations().size());
     }
 
     @Test
+    void getWrappedConfigurationsReturnsUnmodifiableList() {
+        assertThrows(UnsupportedOperationException.class,
+                () -> instance.getWrappedConfigurations().clear());
+    }
+
+    /* reload() */
+
+    @Test
     void reload() {
         // TODO: write this
     }
+
+    /* save() */
 
     @Test
     void save() {
         // TODO: write this
     }
+
+    /* setProperty() */
 
     @Test
     void setProperty() {
