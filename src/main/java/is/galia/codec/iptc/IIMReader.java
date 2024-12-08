@@ -26,6 +26,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -56,6 +57,9 @@ public final class IIMReader {
         buffer = ByteBuffer.wrap(iptcBytes);
     }
 
+    /**
+     * @return Unmodifiable instance.
+     */
     public List<DataSet> read() {
         final Stopwatch watch = new Stopwatch();
 
@@ -63,7 +67,7 @@ public final class IIMReader {
         updateDataSetEncodings();
 
         LOGGER.trace("read(): read in {}", watch);
-        return dataSets;
+        return Collections.unmodifiableList(dataSets);
     }
 
     private void readNextDataSet() {

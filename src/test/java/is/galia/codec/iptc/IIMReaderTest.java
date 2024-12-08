@@ -75,4 +75,13 @@ class IIMReaderTest extends BaseTest {
         assertEquals(0, instance.read().size());
     }
 
+    @Test
+    void readReturnsUnmodifiableInstance() throws Exception {
+        byte[] iptc = Files.readAllBytes(TestUtils.getSampleImage("iptc/iptc.bin"));
+        instance.setSource(iptc);
+
+        List<DataSet> actual = instance.read();
+        assertThrows(UnsupportedOperationException.class, () -> actual.clear());
+    }
+
 }
