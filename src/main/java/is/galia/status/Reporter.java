@@ -77,7 +77,9 @@ public final class Reporter {
         Map<String,Object> report = generateReport(throwable);
         String json = serializeReportAsJSON(report);
         client.setEntity(json);
-        Response response = client.send();
+        try (Response response = client.send()) {
+            // auto-close
+        }
     }
 
     /**
