@@ -430,13 +430,8 @@ public abstract class AbstractResource {
             private float qValue;
 
             @Override
-            public int compareTo(Preference o) {
-                if (o.qValue < qValue) {
-                    return -1;
-                } else if (o.qValue > o.qValue) {
-                    return 1;
-                }
-                return 0;
+            public int compareTo(Preference other) {
+                return Float.compare(other.qValue, qValue);
             }
         }
 
