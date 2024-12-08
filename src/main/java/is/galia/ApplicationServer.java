@@ -151,7 +151,7 @@ public class ApplicationServer {
 
         server = new Server(threadPool);
         server.setHandler(trackingHandler);
-        server.setErrorHandler(new ErrorHandler());
+        server.setErrorHandler(new JettyErrorHandler());
 
         // This is technically "NCSA Combined" format.
         RequestLog log = new CustomRequestLog(

@@ -42,10 +42,10 @@ import java.util.stream.Collectors;
  * a higher-level {@link is.galia.resource.Resource} can be instantiated, such
  * as URI parsing errors.
  */
-class ErrorHandler extends org.eclipse.jetty.server.handler.ErrorHandler {
+class JettyErrorHandler extends org.eclipse.jetty.server.handler.ErrorHandler {
 
     private static final Logger LOGGER =
-            LoggerFactory.getLogger(ErrorHandler.class);
+            LoggerFactory.getLogger(JettyErrorHandler.class);
 
     @Override
     protected void generateResponse(Request request,
