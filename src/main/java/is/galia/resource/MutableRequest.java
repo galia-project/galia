@@ -124,6 +124,10 @@ public class MutableRequest implements Request {
         return remoteAddr;
     }
 
+    public void setBodyStream(InputStream bodyStream) {
+        this.bodyStream = bodyStream;
+    }
+
     @Override
     public void setPathArguments(List<String> pathArguments) {
         this.pathArguments = pathArguments;
