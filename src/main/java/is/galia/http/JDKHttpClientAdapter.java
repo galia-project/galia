@@ -28,6 +28,8 @@ import java.net.PasswordAuthentication;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -162,8 +164,11 @@ class JDKHttpClientAdapter implements Client {
     }
 
     private String basicAuthToken() {
-        return "Basic " + Base64.getEncoder()
-                .encodeToString((username + ":" + secret).getBytes());
+        final Charset charset = StandardCharsets.UTF_8;
+        byte[] rawBytes       = (username + ":" + secret).getBytes(charset);
+        byte[] encodedBytes   = Base64.getEncoder().encode(rawBytes);
+        String encodedString  = new String(encodedBytes, charset);
+        return "Basic " + encodedString;
     }
 
     /**
