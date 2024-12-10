@@ -170,7 +170,7 @@ public abstract class AbstractResource {
         // Log request info.
         getLogger().info("Handling {} {}",
                 request.getMethod(), request.getReference().getPath());
-        getLogger().debug("Request headers: {}",
+        getLogger().trace("Request headers: {}",
                 request.getHeaders().stream()
                         .map(h -> h.name() + ": " +
                                 ("Authorization".equals(h.name()) ? "******" : h.value()))
