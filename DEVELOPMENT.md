@@ -14,6 +14,8 @@
 2. Set the main class to `is.galia.Application`, use `@config/jvm.options` as
    the VM argument, and set the `-config` argument.
     * Also, add `-Dis.galia.env=development` to your `config/jvm.options` file.
+    * It's best to use copies of these config files instead, as they are under
+      version control.
 
 ## Versioning
 
@@ -49,9 +51,9 @@ docker run galia:test
 
 The suggested process for contributing code changes is:
 
-1. Submit a Contributor License Agreement (CLA). No contributions can be
+1. Submit a "heads-up" issue in the tracker, ideally before beginning any work.
+2. Submit a Contributor License Agreement (CLA). No contributions can be
    accepted without one.
-2. Submit a "heads-up" issue in the tracker, ideally before beginning any work.
 3. [Create a fork.](https://github.com/galia-project/galia/fork)
 4. Create a feature branch off of your target version branch.
 5. Make your changes.

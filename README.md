@@ -32,7 +32,7 @@ Now you are ready to run `bin/start.sh` (Linux/macOS) or `bin/start.cmd`
 
 # License
 
-The default public license is PolyForm Noncommercial, which allows most
+The default license is PolyForm Noncommercial, which permits most
 non-commercial use. [LICENSE.txt](LICENSE.txt) contains the full text of this
 license.
 
